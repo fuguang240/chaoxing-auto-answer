@@ -1,73 +1,103 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-      <meta charset="UTF-8">
-      <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body {
-                    width: 360px;
-                    padding: 16px;
-                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-                    background: #f5f7fa;
-            }
-            .header { text-align: center; margin-bottom: 16px; }
-            .header h1 { font-size: 18px; color: #333; margin-bottom: 4px; }
-            .header p { font-size: 12px; color: #999; }
-            .section {
-                    background: white;
-                    border-radius: 8px;
-                    padding: 12px;
-                    margin-bottom: 12px;
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            }
-            .section-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 10px; }
-            textarea {
-                    width: 100%;
-                    height: 120px;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 6px;
-                    padding: 8px;
-                    font-size: 12px;
-                    resize: vertical;
-                    font-family: monospace;
-            }
-            .btn {
-                    width: 100%;
-                    padding: 10px;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 14px;
-                    cursor: pointer;
-                    margin-bottom: 8px;
-            }
-            .btn-primary { background: #4a90d9; color: white; }
-            .btn-success { background: #52c41a; color: white; }
-            .btn-warning { background: #faad14; color: white; }
-            .status { padding: 8px; border-radius: 6px; font-size: 12px; text-align: center; display: none; }
-            .status.show { display: block; }
-            .status.success { background: #f6ffed; color: #52c41a; }
-            .status.error { background: #fff2f0; color: #ff4d4f; }
-          </style>
-  </head>
-  <body>
-      <div class="header">
-            <h1>学习通自动答题助手</h1>
-          <p>超星学习通作业批量答题工具</p>
-      </div>div>
-    <div class="section">
-        <div class="section-title">答案列表（每行一个A/B/C/D）</div>div>
-        <textarea id="answerInput" placeholder="A&#10;B&#10;C&#10;..."></textarea>
-    </div>div>
-    <div class="section">
-        <button class="btn btn-primary" id="btnParse">批量填写答案</button>button>
-        <button class="btn btn-success" id="btnSave">暂时保存</button>button>
-        <button class="btn btn-warning" id="btnSubmit">直接提交</button>button>
-        <div class="status" id="status"></div>div>
-    </div>div>
-    <script src="popup.js"></script>
-  </body>
-</html>html>
-</p></h1>
-  </body>
-      </style>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 360px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+    }
+    .header { text-align: center; margin-bottom: 16px; }
+    .header h1 { font-size: 18px; color: #333; margin-bottom: 4px; }
+    .header p { font-size: 12px; color: #999; }
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .section-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 10px; }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    .btn-auto {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 16px;
+      padding: 14px;
+    }
+    .btn-auto:hover { opacity: 0.9; }
+    .btn-primary { background: #4a90d9; color: white; }
+    .btn-success { background: #52c41a; color: white; }
+    .btn-warning { background: #faad14; color: white; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .status {
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+      margin-top: 8px;
+    }
+    .status.show { display: block; }
+    .status.success { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+    .status.error { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
+    .status.info { background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff; }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+      padding: 8px;
+      background: #fafafa;
+      border-radius: 6px;
+    }
+    .stats b { color: #333; font-size: 16px; }
+    .divider { text-align: center; color: #999; font-size: 12px; margin: 12px 0; position: relative; }
+    .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e0e0e0; }
+    .divider span { background: white; padding: 0 10px; position: relative; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>学习通全自动答题</h1>
+    <p>一键全自动完成作业 · 无人值守模式</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🚀 全自动模式（推荐）</div>
+    <div class="stats">
+      <span>总题数<br><b id="totalQ">-</b></span>
+      <span>自动答<br><b id="answeredQ">-</b></span>
+      <span>模式<br><b>全自动</b></span>
+    </div>
+    <button class="btn btn-auto" id="btnAutoStart">⚡ 一键全自动开始</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="divider"><span>手动模式</span></div>
+
+  <div class="section">
+    <div class="section-title">手动批量填写</div>
+    <textarea id="answerInput" style="width:100%;height:80px;border:1px solid #e0e0e0;border-radius:6px;padding:8px;font-size:12px;" placeholder="手动模式：每行一个A/B/C/D"></textarea>
+    <button class="btn btn-primary" id="btnParse" style="margin-top:8px;">批量填写</button>
+    <button class="btn btn-success" id="btnSave">暂时保存</button>
+    <button class="btn btn-warning" id="btnSubmit">直接提交</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
