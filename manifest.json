@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+    "name": "学习通自动答题助手",
+    "version": "1.0.0",
+    "description": "超星学习通作业自动答题插件 - 批量选择答案，一键完成作业",
+    "permissions": ["activeTab", "storage"],
+    "host_permissions": [
+          "*://*.chaoxing.com/*",
+          "*://*.edu.cn/*"
+    ],
+    "action": {
+          "default_popup": "popup.html"
+    },
+    "content_scripts": [
+          {
+                  "matches": ["*://*.chaoxing.com/*", "*://i.chaoxing.com/*"],
+                  "js": ["content.js"],
+                  "run_at": "document_idle"
+          }
+    ]
+}
