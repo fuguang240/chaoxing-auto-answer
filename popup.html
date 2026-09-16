@@ -5,7 +5,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      width: 360px;
+      width: 380px;
       padding: 16px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f5f7fa;
@@ -38,7 +38,6 @@
       font-size: 16px;
       padding: 14px;
     }
-    .btn-auto:hover { opacity: 0.9; }
     .btn-primary { background: #4a90d9; color: white; }
     .btn-success { background: #52c41a; color: white; }
     .btn-warning { background: #faad14; color: white; }
@@ -55,45 +54,70 @@
     .status.success { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
     .status.error { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
     .status.info { background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff; }
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 10px;
-      padding: 8px;
-      background: #fafafa;
+    textarea {
+      width: 100%;
+      border: 1px solid #e0e0e0;
       border-radius: 6px;
+      padding: 8px;
+      font-size: 12px;
+      resize: vertical;
     }
-    .stats b { color: #333; font-size: 16px; }
-    .divider { text-align: center; color: #999; font-size: 12px; margin: 12px 0; position: relative; }
-    .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e0e0e0; }
-    .divider span { background: white; padding: 0 10px; position: relative; }
+    .choice-area { height: 100px; }
+    .text-area { height: 150px; font-family: sans-serif; }
+    .divider {
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+      margin: 12px 0;
+      position: relative;
+    }
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e0e0e0;
+    }
+    .divider span {
+      background: white;
+      padding: 0 10px;
+      position: relative;
+    }
+    .tip {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>学习通全自动答题</h1>
-    <p>一键全自动完成作业 · 无人值守模式</p>
+    <p>支持单选 + 多选 + 文字题</p>
   </div>
 
   <div class="section">
-    <div class="section-title">🚀 全自动模式（推荐）</div>
-    <div class="stats">
-      <span>总题数<br><b id="totalQ">-</b></span>
-      <span>自动答<br><b id="answeredQ">-</b></span>
-      <span>模式<br><b>全自动</b></span>
-    </div>
-    <button class="btn btn-auto" id="btnAutoStart">⚡ 一键全自动开始</button>
-    <div class="status" id="status"></div>
+    <div class="section-title">🚀 选择题全自动</div>
+    <button class="btn btn-auto" id="btnAutoStart">⚡ 一键全自动（选择题）</button>
+    <div class="status" id="status1"></div>
   </div>
 
-  <div class="divider"><span>手动模式</span></div>
+  <div class="divider"><span>文字题手动填写</span></div>
 
   <div class="section">
-    <div class="section-title">手动批量填写</div>
-    <textarea id="answerInput" style="width:100%;height:80px;border:1px solid #e0e0e0;border-radius:6px;padding:8px;font-size:12px;" placeholder="手动模式：每行一个A/B/C/D"></textarea>
-    <button class="btn btn-primary" id="btnParse" style="margin-top:8px;">批量填写</button>
+    <div class="section-title">📝 文字题答案（每行一题）</div>
+    <textarea id="textAnswers" class="text-area" placeholder="把文字题答案按顺序粘贴在这里，每行一题"></textarea>
+    <div class="tip">提示：把你的毛坯答案发给我优化后，再粘贴到这里</div>
+    <button class="btn btn-primary" id="btnFillText" style="margin-top:8px;">填入文字题答案</button>
+    <div class="status" id="status2"></div>
+  </div>
+
+  <div class="divider"><span>操作</span></div>
+
+  <div class="section">
     <button class="btn btn-success" id="btnSave">暂时保存</button>
     <button class="btn btn-warning" id="btnSubmit">直接提交</button>
   </div>
