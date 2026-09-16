@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+      <meta charset="UTF-8">
+      <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                    width: 360px;
+                    padding: 16px;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                    background: #f5f7fa;
+            }
+            .header { text-align: center; margin-bottom: 16px; }
+            .header h1 { font-size: 18px; color: #333; margin-bottom: 4px; }
+            .header p { font-size: 12px; color: #999; }
+            .section {
+                    background: white;
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+            .section-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 10px; }
+            textarea {
+                    width: 100%;
+                    height: 120px;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 6px;
+                    padding: 8px;
+                    font-size: 12px;
+                    resize: vertical;
+                    font-family: monospace;
+            }
+            .btn {
+                    width: 100%;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    margin-bottom: 8px;
+            }
+            .btn-primary { background: #4a90d9; color: white; }
+            .btn-success { background: #52c41a; color: white; }
+            .btn-warning { background: #faad14; color: white; }
+            .status { padding: 8px; border-radius: 6px; font-size: 12px; text-align: center; display: none; }
+            .status.show { display: block; }
+            .status.success { background: #f6ffed; color: #52c41a; }
+            .status.error { background: #fff2f0; color: #ff4d4f; }
+          </style>
+  </head>
+  <body>
+      <div class="header">
+            <h1>学习通自动答题助手</h1>
+          <p>超星学习通作业批量答题工具</p>
+      </div>div>
+    <div class="section">
+        <div class="section-title">答案列表（每行一个A/B/C/D）</div>div>
+        <textarea id="answerInput" placeholder="A&#10;B&#10;C&#10;..."></textarea>
+    </div>div>
+    <div class="section">
+        <button class="btn btn-primary" id="btnParse">批量填写答案</button>button>
+        <button class="btn btn-success" id="btnSave">暂时保存</button>button>
+        <button class="btn btn-warning" id="btnSubmit">直接提交</button>button>
+        <div class="status" id="status"></div>div>
+    </div>div>
+    <script src="popup.js"></script>
+  </body>
+</html>html>
+</p></h1>
+  </body>
+      </style>
+  </head>
