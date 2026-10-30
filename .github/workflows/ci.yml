@@ -1,0 +1,52 @@
+name: CI 代码检查
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    name: 语法与结构检查
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 校验 manifest.json
+        run: |
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
+            if (m.manifest_version !== 3) throw new Error("manifest_version 必须是 3");
+            if (!m.content_scripts || m.content_scripts.length === 0) throw new Error("缺少 content_scripts");
+            console.log("manifest.json 格式正确");
+          '
+
+      - name: 校验 JS 语法
+        run: |
+          node --check content.js
+          node --check popup.js
+          echo "JS 语法检查通过"
+
+      - name: 校验文件引用完整
+        run: |
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
+            const refs = [];
+            (m.content_scripts || []).forEach(c => (c.js || []).forEach(f => refs.push(f)));
+            const html = fs.readFileSync("popup.html", "utf8");
+            const matches = html.match(/src="([^"]+\.js)"/g) || [];
+            matches.forEach(s => refs.push(s.replace(/src="/, "").replace(/"$/, "")));
+            refs.forEach(f => {
+              if (!fs.existsSync(f)) throw new Error("缺少引用文件: " + f);
+            });
+            console.log("引用文件完整: " + refs.join(", "));
+          '
